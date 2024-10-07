@@ -1,0 +1,12 @@
+{
+  "tasks": {
+    "dev": "deno run --watch main.ts"
+  },
+  "imports": {
+    "#/": "./",
+    "@sinclair/typebox": "npm:@sinclair/typebox@^0.33.14",
+    "@sinclair/typebox-codegen": "npm:@sinclair/typebox-codegen@^0.10.5",
+    "common-tree-sitter-languages/": "https://github.com/jeff-hykin/common_tree_sitter_languages/raw/e0395e3a6e552b0fa73500d5b724735a52936067/main/",
+    "deno-tree-sitter/": "https://deno.land/x/deno_tree_sitter@0.2.5.2/"
+  }
+}
