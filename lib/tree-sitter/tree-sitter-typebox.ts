@@ -1,11 +1,7 @@
-import type { TSchema, Type } from "@sinclair/typebox";
+import { TSchema } from "@sinclair/typebox";
+import { TypeScriptToModel } from "@sinclair/typebox-codegen";
 import type { Capture, Tree } from "./tree-sitter.ts";
-// import { findNodeString } from "./tree-sitter.ts";
-
-/**
- * typeScriptTypeAnnotationPrefix is the prefix of a TypeScript type annotation.
- */
-export const typeScriptTypeAnnotationPrefix = ": ";
+import { findNodeString } from "./tree-sitter.ts";
 
 /**
  * getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of a
@@ -15,10 +11,19 @@ export function getTypeBoxSchemaFromTreeSitterTypeScriptClass(
   tree: Tree,
   className: string,
 ): TSchema {
-  const results = tree?.rootNode.query(
-    makeTreeSitterTypeScriptClassPattern(className),
+  const model = TypeScriptToModel.Generate(
+    compileClassToInterface(
+      tree?.rootNode.query(
+        makeTreeSitterTypeScriptClassPattern(className),
+      ),
+    ),
   );
-  throw new Error("Function not implemented.");
+  const schema = model.types[0];
+  if (schema === undefined) {
+    throw new Error("Schema is not defined.");
+  }
+
+  return schema;
 }
 
 /**
@@ -59,6 +64,46 @@ export function makeTreeSitterTypeScriptClassPattern(
 )`;
 }
 
-// Reference:
-// https://github.com/EthanThatOneKid/calendar/blob/4ee4043b79ed728db13d01c8b2db5cca2d0d6b54/lib/tree-sitter/tree-sitter-typescript.ts#L34
-//
+/**
+ * compileClassToInterface compiles a TypeScript interface from the results of
+ * a Tree Sitter query on a TypeScript class.
+ */
+export function compileClassToInterface(
+  captures: Capture[],
+): string {
+  const typeIdentifier = findNodeString(captures, "type_id");
+  if (typeIdentifier === undefined) {
+    throw new Error("Type identifier is not defined.");
+  }
+
+  return `interface ${typeIdentifier} {
+    ${
+    captures
+      .map((capture) => compileCaptureToInterfaceField(capture))
+      .join("\n")
+  }
+}`;
+}
+
+/**
+ * compileCaptureToInterfaceField compiles a TypeScript interface field from a
+ * Tree Sitter capture.
+ */
+export function compileCaptureToInterfaceField(
+  capture: Capture,
+): string {
+  const typeAnnotation = findNodeString(
+    capture.node.children,
+    "type_annotation",
+  )?.slice(typeScriptTypeAnnotationPrefix.length);
+  if (typeAnnotation === undefined) {
+    throw new Error("Type annotation is not defined.");
+  }
+
+  return `${capture.name}: ${typeAnnotation};`;
+}
+
+/**
+ * typeScriptTypeAnnotationPrefix is the prefix of a TypeScript type annotation.
+ */
+export const typeScriptTypeAnnotationPrefix = ": ";
