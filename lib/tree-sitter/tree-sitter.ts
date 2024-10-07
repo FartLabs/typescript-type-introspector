@@ -1,21 +1,41 @@
-import type { Node, Parser, Tree } from "deno-tree-sitter/tree_sitter.js";
+import type { Parser, Tree } from "deno-tree-sitter/tree_sitter.js";
 
-export type { Node, Parser, Tree };
-
-/**
- * Capture is a named node in the tree.
- */
-export interface Capture {
-  name: string;
-  node: Node;
-}
+export type { Parser, Tree };
 
 /**
  * findNodeString finds the string of a node in the list of captures.
  */
 export function findNodeString(
-  captures: Capture[],
-  name: string,
+  captures: NamedCapture[],
+  captureName: string,
 ): string | undefined {
-  return captures.find((capture) => capture.name === name)?.node?.text;
+  return captures.find((capture) => capture.name === captureName)?.node?.text;
+}
+
+export interface Capture {
+  pattern: number;
+  captures: NamedCapture[];
+}
+
+export interface NamedCapture {
+  name: string;
+  node: Node;
+}
+
+export interface Node {
+  type: string;
+  typeId: number;
+  startPosition: Position;
+  startIndex: number;
+  endPosition: Position;
+  endIndex: number;
+  indent: string;
+  hasChildren: boolean;
+  children: Node[];
+  text?: string;
+}
+
+export interface Position {
+  row: number;
+  column: number;
 }

@@ -1,6 +1,6 @@
 import { TSchema } from "@sinclair/typebox";
 import { TypeScriptToModel } from "@sinclair/typebox-codegen";
-import type { Capture, Tree } from "./tree-sitter.ts";
+import type { Capture, NamedCapture, Tree } from "./tree-sitter.ts";
 import { findNodeString } from "./tree-sitter.ts";
 
 /**
@@ -65,20 +65,24 @@ export function makeTreeSitterTypeScriptClassPattern(
 }
 
 /**
- * compileClassToInterface compiles a TypeScript interface from the results of
- * a Tree Sitter query on a TypeScript class.
+ * compileClassToInterface compiles the results of a Tree Sitter query on a
+ * TypeScript class to a TypeScript interface.
  */
 export function compileClassToInterface(
-  captures: Capture[],
+  root: Capture[],
 ): string {
-  const typeIdentifier = findNodeString(captures, "type_id");
+  // TODO: handle root captures.
+  // https://pastebin.com/m9KGwMvE
+  //
+
+  const typeIdentifier = findNodeString(root[0]?.captures, "type_id");
   if (typeIdentifier === undefined) {
     throw new Error("Type identifier is not defined.");
   }
 
   return `interface ${typeIdentifier} {
     ${
-    captures
+    root
       .map((capture) => compileCaptureToInterfaceField(capture))
       .join("\n")
   }
@@ -90,7 +94,7 @@ export function compileClassToInterface(
  * Tree Sitter capture.
  */
 export function compileCaptureToInterfaceField(
-  capture: Capture,
+  capture: NamedCapture,
 ): string {
   const typeAnnotation = findNodeString(
     capture.node.children,

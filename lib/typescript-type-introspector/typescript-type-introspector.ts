@@ -1,16 +1,11 @@
+import type { TSchema } from "@sinclair/typebox";
+
 /**
  * TypeScriptTypeIntrospector is an interface for TypeScript type introspection.
  */
 export interface TypeScriptTypeIntrospector {
-  getTypeOfClass(
-    path: string | URL,
-    className: string,
-  ): TypeScriptType;
+  /**
+   * getTypeBoxSchemaByClass returns a TypeBox schema by TypeScript class.
+   */
+  getTypeBoxSchemaByClass(sourceCode: string, identifier: string): TSchema;
 }
-
-/**
- * TypeScriptType represents a TypeScript type.
- */
-export type TypeScriptType =
-  | string
-  | { [propertyKey: string]: TypeScriptType };
