@@ -4,9 +4,10 @@ import { TreeSitterTypeScriptTypeIntrospector } from "#/lib/typescript-type-intr
 
 if (import.meta.main) {
   const parser = await parserFromWasm(typescript);
-  const introspector = new TreeSitterTypeScriptTypeIntrospector(parser);
-  const result = introspector.getTypeBoxSchemaByClass(
-    await Deno.readTextFile("./person.ts"),
+  const typeIntrospector = new TreeSitterTypeScriptTypeIntrospector(parser);
+  const sourceCode = await Deno.readTextFile("./person.ts");
+  const result = typeIntrospector.getTypeBoxSchemaByClass(
+    sourceCode,
     "Person",
   );
 

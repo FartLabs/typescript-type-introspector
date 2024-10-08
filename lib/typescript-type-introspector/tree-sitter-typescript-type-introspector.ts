@@ -1,6 +1,6 @@
 import type { TSchema } from "@sinclair/typebox";
 import type { Parser } from "#/lib/tree-sitter/tree-sitter.ts";
-import { getTypeBoxSchemaFromTreeSitterTypeScriptClass } from "#/lib/tree-sitter/tree-sitter-typebox.ts";
+import { getTypeBoxSchemaFromTreeSitterTypeScriptClass } from "#/lib/tree-sitter/tree-sitter-typebox/typescript-class.ts";
 import type { TypeScriptTypeIntrospector } from "./typescript-type-introspector.ts";
 
 /**
