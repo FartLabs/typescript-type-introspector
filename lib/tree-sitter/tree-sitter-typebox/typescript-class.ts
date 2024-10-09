@@ -82,13 +82,12 @@ export function compileClassToInterface(
   captures: Capture[],
   nameMap: ClassTreeSitterCaptureNameMap,
 ): string {
-  // TODO: handle root captures.
-  // https://pastebin.com/m9KGwMvE
-  //
-
-  // console.log({ root });
+  const namedCaptures = captures?.[0]?.captures;
+  if (namedCaptures === undefined) {
+    throw new Error("Named captures are not defined.");
+  }
   const interfaceIdentifier = findCaptureString(
-    captures[0].captures,
+    namedCaptures,
     nameMap.TYPE_IDENTIFIER,
   );
   return `interface ${interfaceIdentifier} { ${
@@ -99,9 +98,6 @@ export function compileClassToInterface(
       )
       .join(" ")
   } }`;
-
-  // TODO: Fix.
-  throw new Error("Not implemented.");
 }
 
 /**
@@ -112,8 +108,6 @@ export function compileCaptureToInterfaceField(
   namedCaptures: NamedCapture[],
   nameMap: ClassTreeSitterCaptureNameMap,
 ): string {
-  console.log({ namedCaptures });
-
   const propertyIdentifier = findCaptureString(
     namedCaptures,
     nameMap.PROPERTY_IDENTIFIER,
