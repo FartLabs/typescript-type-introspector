@@ -3,7 +3,7 @@ import { TypeCompiler } from "@sinclair/typebox/compiler";
 import {
   compileClassToInterface,
   getTypeBoxSchemaFromTreeSitterTypeScriptClass,
-} from "./typescript-class.ts";
+} from "./from-typescript-class.ts";
 import {
   EXAMPLE_CAPTURES,
   EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,

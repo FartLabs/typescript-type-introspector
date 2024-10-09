@@ -11,6 +11,14 @@ import {
 } from "#/lib/tree-sitter/tree-sitter.ts";
 
 /**
+ * fromTypeScriptClass is shorthand for getTypeBoxSchemaFromTreeSitterTypeScriptClass.
+ *
+ * @see {@link getTypeBoxSchemaFromTreeSitterTypeScriptClass}
+ */
+export const fromTypeScriptClass =
+  getTypeBoxSchemaFromTreeSitterTypeScriptClass;
+
+/**
  * getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of a
  * TypeScript class via Tree Sitter and returns a TypeBox schema.
  */

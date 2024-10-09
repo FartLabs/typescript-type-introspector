@@ -4,7 +4,7 @@ import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
 import {
   defaultClassTreeSitterCaptureNameMap,
   makeTreeSitterTypeScriptClassPattern,
-} from "#/lib/tree-sitter/tree-sitter-typebox/typescript-class.ts";
+} from "./from-typescript-class.ts";
 
 /**
  * ExamplePerson is an example class that represents a person.
