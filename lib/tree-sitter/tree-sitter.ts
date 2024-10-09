@@ -43,6 +43,9 @@ export interface Capture {
   captures: NamedCapture[];
 }
 
+/**
+ * NamedCapture is the sub-capture of a capture with a name.
+ */
 export interface NamedCapture {
   name: string;
   node: Node;

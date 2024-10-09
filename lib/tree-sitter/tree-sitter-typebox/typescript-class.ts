@@ -79,7 +79,7 @@ export function makeTreeSitterTypeScriptClassPattern(
  * TypeScript class to a TypeScript interface.
  */
 export function compileClassToInterface(
-  root: Capture[],
+  captures: Capture[],
   nameMap: ClassTreeSitterCaptureNameMap,
 ): string {
   // TODO: handle root captures.
@@ -88,13 +88,15 @@ export function compileClassToInterface(
 
   // console.log({ root });
   const interfaceIdentifier = findCaptureString(
-    root[0].captures,
+    captures[0].captures,
     nameMap.TYPE_IDENTIFIER,
   );
   return `interface ${interfaceIdentifier} { ${
-    root[0].captures
-      // TODO: Fix implementation of function compileCaptureToInterfaceField.
-      .map((capture) => compileCaptureToInterfaceField(capture, nameMap))
+    captures
+      .flatMap(
+        ({ captures: namedCaptures }) =>
+          compileCaptureToInterfaceField(namedCaptures, nameMap),
+      )
       .join(" ")
   } }`;
 
@@ -107,26 +109,28 @@ export function compileClassToInterface(
  * Tree Sitter capture.
  */
 export function compileCaptureToInterfaceField(
-  captures: NamedCapture[],
+  namedCaptures: NamedCapture[],
   nameMap: ClassTreeSitterCaptureNameMap,
 ): string {
-  console.log({ captures });
+  console.log({ namedCaptures });
+
+  const propertyIdentifier = findCaptureString(
+    namedCaptures,
+    nameMap.PROPERTY_IDENTIFIER,
+  );
+  if (propertyIdentifier === undefined) {
+    throw new Error("Property identifier is not defined.");
+  }
 
   const typeAnnotation = findCaptureString(
-    captures,
+    namedCaptures,
     nameMap.TYPE_ANNOTATION,
   )?.slice(typeScriptTypeAnnotationPrefix.length);
   if (typeAnnotation === undefined) {
     throw new Error("Type annotation is not defined.");
   }
 
-  console.log({ typeAnnotation });
-
-  // My brain feels sorta fried 😵‍💫
-
-  throw new Error("Not implemented.");
-
-  // return `${capture.name}: ${typeAnnotation};`;
+  return `${propertyIdentifier}: ${typeAnnotation};`;
 }
 
 /**
