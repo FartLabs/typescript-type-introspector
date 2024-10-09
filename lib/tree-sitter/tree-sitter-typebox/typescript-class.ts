@@ -67,9 +67,9 @@ export function makeTreeSitterTypeScriptClassPattern(
           )
         )
       )
-    ]*
+    ]
   )
-)+`;
+)`;
 }
 
 // TODO: Write unit tests.
