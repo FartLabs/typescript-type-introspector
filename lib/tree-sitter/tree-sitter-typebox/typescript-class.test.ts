@@ -20,7 +20,7 @@ Deno.test("compileClassToInterface compiles a class to an interface", () => {
   assertEquals(interfaceCode, EXAMPLE_INTERFACE_CODE);
 });
 
-Deno.test("getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of a TypeScript class via Tree Sitter and returns a TypeBox schema", async () => {
+Deno.test("getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of a TypeScript class via Tree Sitter and returns a TypeBox schema", () => {
   const schema = getTypeBoxSchemaFromTreeSitterTypeScriptClass(
     EXAMPLE_TREE,
     ExamplePerson.name,
