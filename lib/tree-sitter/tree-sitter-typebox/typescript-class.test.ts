@@ -8,6 +8,7 @@ import {
   EXAMPLE_CAPTURES,
   EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   EXAMPLE_INTERFACE_CODE,
+  EXAMPLE_PERSON,
   EXAMPLE_TREE,
   ExamplePerson,
 } from "./example-person.ts";
@@ -26,6 +27,5 @@ Deno.test("getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of 
     ExamplePerson.name,
   );
   const typeCheck = TypeCompiler.Compile(schema);
-  const examplePerson = new ExamplePerson("Ethan", 23);
-  assert(typeCheck.Check(examplePerson));
+  assert(typeCheck.Check(EXAMPLE_PERSON));
 });

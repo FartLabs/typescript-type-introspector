@@ -4,7 +4,7 @@ import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
 import {
   defaultClassTreeSitterCaptureNameMap,
   makeTreeSitterTypeScriptClassPattern,
-} from "./typescript-class.ts";
+} from "#/lib/tree-sitter/tree-sitter-typebox/typescript-class.ts";
 
 /**
  * ExamplePerson is an example class that represents a person.
@@ -19,12 +19,11 @@ export class ExamplePerson {
   ) {}
 }
 
-const parser = await parserFromWasm(typescript);
-
+export const EXAMPLE_PARSER = await parserFromWasm(typescript);
 export const EXAMPLE_SOURCE_CODE = await Deno.readTextFile(
   new URL(import.meta.url),
 );
-export const EXAMPLE_TREE = parser.parse(EXAMPLE_SOURCE_CODE);
+export const EXAMPLE_TREE = EXAMPLE_PARSER.parse(EXAMPLE_SOURCE_CODE);
 export const EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP =
   defaultClassTreeSitterCaptureNameMap;
 export const EXAMPLE_CAPTURES = queryRootNode(
@@ -36,3 +35,4 @@ export const EXAMPLE_CAPTURES = queryRootNode(
 );
 export const EXAMPLE_INTERFACE_CODE =
   `interface ExamplePerson { homePlanet: string; occupation: string; name: string; age: number; }`;
+export const EXAMPLE_PERSON = new ExamplePerson("Ethan", 23);
