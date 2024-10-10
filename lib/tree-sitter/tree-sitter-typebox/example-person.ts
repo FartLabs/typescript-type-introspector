@@ -34,5 +34,5 @@ export const EXAMPLE_CAPTURES = queryRootNode(
   ),
 );
 export const EXAMPLE_INTERFACE_CODE =
-  `interface ExamplePerson { homePlanet: string; occupation: string; name: string; age: number; }`;
+  `interface ExamplePerson { homePlanet?: string; occupation?: string; name: string; age: number; }`;
 export const EXAMPLE_PERSON = new ExamplePerson("Ethan", 23);

@@ -60,22 +60,23 @@ export function makeTreeSitterTypeScriptClassPattern(
         (accessibility_modifier)*
         name: (property_identifier) @${nameMap.PROPERTY_IDENTIFIER}
         type: (type_annotation)* @${nameMap.TYPE_ANNOTATION}
-        value: (_) @${nameMap.VALUE}
+        value: (_)* @${nameMap.VALUE}
       ) @${nameMap.PUBLIC_FIELD_DEFINITION}
 
       (method_definition
         name: (property_identifier) @constructor-method
         (#eq? @constructor-method "constructor")
+
         parameters: (formal_parameters
           (required_parameter
             (accessibility_modifier)*
             pattern: (identifier) @${nameMap.PROPERTY_IDENTIFIER}
             type: (type_annotation)* @${nameMap.TYPE_ANNOTATION}
-            value: (_) @${nameMap.VALUE}
-          ) @${nameMap.REQUIRED_PARAMETER}
+            value: (_)* @${nameMap.VALUE}
+          ) @${nameMap.PUBLIC_FIELD_DEFINITION}
         )
       )
-    ]+
+    ]
   )
 )`;
 }
@@ -133,7 +134,7 @@ export function compileCaptureToInterfaceField(
   const fieldDefinition = findCaptureString(
     namedCaptures,
     nameMap.PUBLIC_FIELD_DEFINITION,
-  ) ?? findCaptureString(namedCaptures, nameMap.REQUIRED_PARAMETER);
+  );
   if (fieldDefinition === undefined) {
     throw new Error("Field definition is not defined.");
   }
@@ -176,7 +177,6 @@ export const typeScriptTypeAnnotationPrefix = ": ";
 export const defaultClassTreeSitterCaptureNameMap = {
   PROPERTY_IDENTIFIER: "property-identifier",
   PUBLIC_FIELD_DEFINITION: "public-field-definition",
-  REQUIRED_PARAMETER: "required-parameter",
   TYPE_ANNOTATION: "type-annotation",
   TYPE_IDENTIFIER: "type-identifier",
   VALUE: "value",
@@ -201,7 +201,6 @@ export type ClassCaptureName = typeof CLASS_CAPTURE_NAMES[number];
 export const CLASS_CAPTURE_NAMES = [
   "PROPERTY_IDENTIFIER",
   "PUBLIC_FIELD_DEFINITION",
-  "REQUIRED_PARAMETER",
   "TYPE_ANNOTATION",
   "TYPE_IDENTIFIER",
   "VALUE",
