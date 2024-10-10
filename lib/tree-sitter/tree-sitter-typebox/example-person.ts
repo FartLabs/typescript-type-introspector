@@ -10,8 +10,8 @@ import {
  * ExamplePerson is an example class that represents a person.
  */
 export class ExamplePerson {
-  public homePlanet: string = "Earth";
-  public occupation: string = "Software Engineer";
+  public homePlanet?: string = "Earth";
+  public occupation?: string = "Software Engineer";
 
   public constructor(
     public name: string,

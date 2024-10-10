@@ -60,23 +60,22 @@ export function makeTreeSitterTypeScriptClassPattern(
         (accessibility_modifier)*
         name: (property_identifier) @${nameMap.PROPERTY_IDENTIFIER}
         type: (type_annotation)* @${nameMap.TYPE_ANNOTATION}
-        value: (_)* @${nameMap.VALUE}
-      @${nameMap.PUBLIC_FIELD_DEFINITION})
+        value: (_) @${nameMap.VALUE}
+      ) @${nameMap.PUBLIC_FIELD_DEFINITION}
 
       (method_definition
         name: (property_identifier) @constructor-method
         (#eq? @constructor-method "constructor")
-
         parameters: (formal_parameters
           (required_parameter
             (accessibility_modifier)*
             pattern: (identifier) @${nameMap.PROPERTY_IDENTIFIER}
             type: (type_annotation)* @${nameMap.TYPE_ANNOTATION}
-            value: (_)* @${nameMap.VALUE}
-          @${nameMap.PUBLIC_FIELD_DEFINITION})
+            value: (_) @${nameMap.VALUE}
+          ) @${nameMap.REQUIRED_PARAMETER}
         )
       )
-    ]
+    ]+
   )
 )`;
 }
@@ -134,23 +133,36 @@ export function compileCaptureToInterfaceField(
   const fieldDefinition = findCaptureString(
     namedCaptures,
     nameMap.PUBLIC_FIELD_DEFINITION,
-  );
+  ) ?? findCaptureString(namedCaptures, nameMap.REQUIRED_PARAMETER);
   if (fieldDefinition === undefined) {
     throw new Error("Field definition is not defined.");
   }
 
-  const hasQuestionToken =
-    fieldDefinition.at(fieldDefinition.indexOf(":") - 1) === "?";
-  const defaultValue = findCaptureString(namedCaptures, nameMap.VALUE);
-  return `${
-    defaultValue !== undefined
-      ? compileJSDocComment(`@default ${defaultValue}`)
-      : ""
-  }${propertyIdentifier}${hasQuestionToken ? "?" : ""}: ${typeAnnotation};`;
+  const hasQuestionToken = checkHasQuestionToken(fieldDefinition);
+  return `${propertyIdentifier}${
+    hasQuestionToken ? "?" : ""
+  }: ${typeAnnotation};`;
 }
 
-function compileJSDocComment(...lines: string[]): string {
-  return `/**\n * ${lines.join("\n * ")}\n */\n`;
+/**
+ * checkHasQuestionToken checks if a field definition has a question token.
+ */
+export function checkHasQuestionToken(fieldDefinition: string): boolean {
+  const index = fieldDefinition.indexOf(":");
+  if (index === -1) {
+    return false;
+  }
+
+  return fieldDefinition.at(fieldDefinition.indexOf(":") - 1) === "?";
+}
+
+/**
+ * compileJSDocCommentDefault compiles a JSDoc comment with a default value.
+ * @see
+ * https://github.com/xddq/ts2typebox/blob/30116d7ff816b2d838d5dc5b757df6151632ef11/README.md#examples
+ */
+export function compileJSDocCommentDefault(defaultValue: string): string {
+  return `/** @default ${defaultValue} */`;
 }
 
 /**
@@ -164,6 +176,7 @@ export const typeScriptTypeAnnotationPrefix = ": ";
 export const defaultClassTreeSitterCaptureNameMap = {
   PROPERTY_IDENTIFIER: "property-identifier",
   PUBLIC_FIELD_DEFINITION: "public-field-definition",
+  REQUIRED_PARAMETER: "required-parameter",
   TYPE_ANNOTATION: "type-annotation",
   TYPE_IDENTIFIER: "type-identifier",
   VALUE: "value",
@@ -188,6 +201,7 @@ export type ClassCaptureName = typeof CLASS_CAPTURE_NAMES[number];
 export const CLASS_CAPTURE_NAMES = [
   "PROPERTY_IDENTIFIER",
   "PUBLIC_FIELD_DEFINITION",
+  "REQUIRED_PARAMETER",
   "TYPE_ANNOTATION",
   "TYPE_IDENTIFIER",
   "VALUE",
