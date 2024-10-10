@@ -11,7 +11,8 @@ import {
 } from "#/lib/tree-sitter/tree-sitter.ts";
 
 /**
- * fromTypeScriptClass is shorthand for getTypeBoxSchemaFromTreeSitterTypeScriptClass.
+ * fromTypeScriptClass is an alias for
+ * `getTypeBoxSchemaFromTreeSitterTypeScriptClass`.
  *
  * @see {@link getTypeBoxSchemaFromTreeSitterTypeScriptClass}
  */
@@ -42,8 +43,8 @@ export function getTypeBoxSchemaFromTreeSitterTypeScriptClass(
 }
 
 /**
- * makeTreeSitterTypeScriptClassPattern makes a Tree Sitter TypeScript class pattern
- * for a given class name to query against the Tree Sitter tree.
+ * makeTreeSitterTypeScriptClassPattern makes a Tree Sitter TypeScript class
+ * pattern for a given class name to query against the Tree Sitter tree.
  */
 export function makeTreeSitterTypeScriptClassPattern(
   identifier: string,
@@ -60,7 +61,7 @@ export function makeTreeSitterTypeScriptClassPattern(
         name: (property_identifier) @${nameMap.PROPERTY_IDENTIFIER}
         type: (type_annotation)* @${nameMap.TYPE_ANNOTATION}
         value: (_)* @${nameMap.VALUE}
-      )
+      @${nameMap.PUBLIC_FIELD_DEFINITION})
 
       (method_definition
         name: (property_identifier) @constructor-method
@@ -72,15 +73,13 @@ export function makeTreeSitterTypeScriptClassPattern(
             pattern: (identifier) @${nameMap.PROPERTY_IDENTIFIER}
             type: (type_annotation)* @${nameMap.TYPE_ANNOTATION}
             value: (_)* @${nameMap.VALUE}
-          )
+          @${nameMap.PUBLIC_FIELD_DEFINITION})
         )
       )
     ]
   )
 )`;
 }
-
-// TODO: Write unit tests.
 
 /**
  * compileClassToInterface compiles the results of a Tree Sitter query on a
@@ -132,7 +131,26 @@ export function compileCaptureToInterfaceField(
     throw new Error("Type annotation is not defined.");
   }
 
-  return `${propertyIdentifier}: ${typeAnnotation};`;
+  const fieldDefinition = findCaptureString(
+    namedCaptures,
+    nameMap.PUBLIC_FIELD_DEFINITION,
+  );
+  if (fieldDefinition === undefined) {
+    throw new Error("Field definition is not defined.");
+  }
+
+  const hasQuestionToken =
+    fieldDefinition.at(fieldDefinition.indexOf(":") - 1) === "?";
+  const defaultValue = findCaptureString(namedCaptures, nameMap.VALUE);
+  return `${
+    defaultValue !== undefined
+      ? compileJSDocComment(`@default ${defaultValue}`)
+      : ""
+  }${propertyIdentifier}${hasQuestionToken ? "?" : ""}: ${typeAnnotation};`;
+}
+
+function compileJSDocComment(...lines: string[]): string {
+  return `/**\n * ${lines.join("\n * ")}\n */\n`;
 }
 
 /**
@@ -144,9 +162,10 @@ export const typeScriptTypeAnnotationPrefix = ": ";
  * defaultClassTreeSitterCaptureNameMap is the default class capture name map.
  */
 export const defaultClassTreeSitterCaptureNameMap = {
-  TYPE_IDENTIFIER: "type-identifier",
   PROPERTY_IDENTIFIER: "property-identifier",
+  PUBLIC_FIELD_DEFINITION: "public-field-definition",
   TYPE_ANNOTATION: "type-annotation",
+  TYPE_IDENTIFIER: "type-identifier",
   VALUE: "value",
 } as const satisfies ClassTreeSitterCaptureNameMap;
 
@@ -168,6 +187,7 @@ export type ClassCaptureName = typeof CLASS_CAPTURE_NAMES[number];
  */
 export const CLASS_CAPTURE_NAMES = [
   "PROPERTY_IDENTIFIER",
+  "PUBLIC_FIELD_DEFINITION",
   "TYPE_ANNOTATION",
   "TYPE_IDENTIFIER",
   "VALUE",
