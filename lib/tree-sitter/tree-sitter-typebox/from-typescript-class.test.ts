@@ -12,6 +12,10 @@ import {
   EXAMPLE_PERSON_TREE,
   ExamplePerson,
 } from "./example-person.ts";
+import {
+  EXAMPLE_BOOK_CAPTURES,
+  EXAMPLE_BOOK_INTERFACE_CODE,
+} from "./example-book.ts";
 
 Deno.test("compileClassToInterface compiles a class to an interface", () => {
   const interfaceCode = compileClassToInterface(
@@ -28,4 +32,12 @@ Deno.test("getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of 
   );
   const typeCheck = TypeCompiler.Compile(schema);
   assert(typeCheck.Check(EXAMPLE_PERSON));
+});
+
+Deno.test("compileClassToInterface compiles a nested class to an interface", () => {
+  const interfaceCode = compileClassToInterface(
+    EXAMPLE_BOOK_CAPTURES,
+    EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
+  );
+  assertEquals(interfaceCode, EXAMPLE_BOOK_INTERFACE_CODE);
 });
