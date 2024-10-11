@@ -4,26 +4,26 @@ import {
   compileClassToInterface,
   getTypeBoxSchemaFromTreeSitterTypeScriptClass,
 } from "./from-typescript-class.ts";
+import { EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP } from "./example-tree-sitter-parser.ts";
 import {
-  EXAMPLE_CAPTURES,
-  EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
-  EXAMPLE_INTERFACE_CODE,
   EXAMPLE_PERSON,
-  EXAMPLE_TREE,
+  EXAMPLE_PERSON_CAPTURES,
+  EXAMPLE_PERSON_INTERFACE_CODE,
+  EXAMPLE_PERSON_TREE,
   ExamplePerson,
 } from "./example-person.ts";
 
 Deno.test("compileClassToInterface compiles a class to an interface", () => {
   const interfaceCode = compileClassToInterface(
-    EXAMPLE_CAPTURES,
-    EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
+    EXAMPLE_PERSON_CAPTURES,
+    EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   );
-  assertEquals(interfaceCode, EXAMPLE_INTERFACE_CODE);
+  assertEquals(interfaceCode, EXAMPLE_PERSON_INTERFACE_CODE);
 });
 
 Deno.test("getTypeBoxSchemaFromTreeSitterTypeScriptClass gets the properties of a TypeScript class via Tree Sitter and returns a TypeBox schema", () => {
   const schema = getTypeBoxSchemaFromTreeSitterTypeScriptClass(
-    EXAMPLE_TREE,
+    EXAMPLE_PERSON_TREE,
     ExamplePerson.name,
   );
   const typeCheck = TypeCompiler.Compile(schema);

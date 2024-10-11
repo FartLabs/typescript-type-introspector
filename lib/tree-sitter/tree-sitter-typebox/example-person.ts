@@ -1,10 +1,9 @@
-import { parserFromWasm } from "deno-tree-sitter/main.js";
-import typescript from "common-tree-sitter-languages/typescript.js";
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
+import { makeTreeSitterTypeScriptClassPattern } from "./from-typescript-class.ts";
 import {
-  defaultClassTreeSitterCaptureNameMap,
-  makeTreeSitterTypeScriptClassPattern,
-} from "./from-typescript-class.ts";
+  EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
+  EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER,
+} from "./example-tree-sitter-parser.ts";
 
 /**
  * ExamplePerson is an example class that represents a person.
@@ -19,20 +18,41 @@ export class ExamplePerson {
   ) {}
 }
 
-export const EXAMPLE_PARSER = await parserFromWasm(typescript);
-export const EXAMPLE_SOURCE_CODE = await Deno.readTextFile(
+/**
+ * EXAMPLE_PERSON is an example instance of the ExamplePerson class.
+ */
+export const EXAMPLE_PERSON = new ExamplePerson("Ethan", 23);
+
+/**
+ * EXAMPLE_PERSON_SOURCE_CODE is the source code of the ExamplePerson class.
+ */
+export const EXAMPLE_PERSON_SOURCE_CODE = await Deno.readTextFile(
   new URL(import.meta.url),
 );
-export const EXAMPLE_TREE = EXAMPLE_PARSER.parse(EXAMPLE_SOURCE_CODE);
-export const EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP =
-  defaultClassTreeSitterCaptureNameMap;
-export const EXAMPLE_CAPTURES = queryRootNode(
-  EXAMPLE_TREE,
+
+/**
+ * EXAMPLE_PERSON_TREE is a tree-sitter tree for the ExamplePerson class's
+ * source code.
+ */
+export const EXAMPLE_PERSON_TREE = EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER.parse(
+  EXAMPLE_PERSON_SOURCE_CODE,
+);
+
+/**
+ * EXAMPLE_PERSON_CAPTURES is a list of captures for the ExamplePerson class's
+ * source code.
+ */
+export const EXAMPLE_PERSON_CAPTURES = queryRootNode(
+  EXAMPLE_PERSON_TREE,
   makeTreeSitterTypeScriptClassPattern(
     ExamplePerson.name,
-    EXAMPLE_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
+    EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   ),
 );
-export const EXAMPLE_INTERFACE_CODE =
+
+/**
+ * EXAMPLE_PERSON_INTERFACE_CODE is the TypeScript interface code for the
+ * ExamplePerson class.
+ */
+export const EXAMPLE_PERSON_INTERFACE_CODE =
   `interface ExamplePerson { homePlanet?: string; occupation?: string; name: string; age: number; }`;
-export const EXAMPLE_PERSON = new ExamplePerson("Ethan", 23);
