@@ -1,5 +1,5 @@
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
-import { makeTreeSitterTypeScriptClassPattern } from "#/lib/tree-sitter/tree-sitter-typebox/from-typescript-class.ts";
+import { makeTreeSitterTypeScriptClassPattern } from "#/lib/introspector/tree-sitter-introspector.ts";
 import {
   EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER,
@@ -22,6 +22,32 @@ export class Person {
  * EXAMPLE_PERSON is an example instance of the Person class.
  */
 export const EXAMPLE_PERSON = new Person("Ethan", 23);
+
+/**
+ * EXAMPLE_PERSON_INTROSPECTION is the introspection of the Person class.
+ */
+export const EXAMPLE_PERSON_INTROSPECTION = [
+  {
+    name: "homePlanet",
+    optional: true,
+    type: "string",
+  },
+  {
+    name: "occupation",
+    optional: true,
+    type: "string",
+  },
+  {
+    name: "name",
+    optional: false,
+    type: "string",
+  },
+  {
+    name: "age",
+    optional: false,
+    type: "number",
+  },
+];
 
 /**
  * EXAMPLE_PERSON_SOURCE_CODE is the source code of the Person class.
@@ -49,10 +75,3 @@ export const EXAMPLE_PERSON_CAPTURES = queryRootNode(
     EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   ),
 );
-
-/**
- * EXAMPLE_PERSON_INTERFACE_CODE is the TypeScript interface code for the
- * Person class.
- */
-export const EXAMPLE_PERSON_INTERFACE_CODE =
-  `interface Person { homePlanet?: string; occupation?: string; name: string; age: number; }`;

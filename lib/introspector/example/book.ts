@@ -1,5 +1,5 @@
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
-import { makeTreeSitterTypeScriptClassPattern } from "#/lib/tree-sitter/tree-sitter-typebox/from-typescript-class.ts";
+import { makeTreeSitterTypeScriptClassPattern } from "#/lib/introspector/tree-sitter-introspector.ts";
 import {
   EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER,
@@ -46,9 +46,3 @@ export const EXAMPLE_BOOK_CAPTURES = queryRootNode(
     EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   ),
 );
-
-/**
- * EXAMPLE_BOOK_INTERFACE_CODE is the TypeScript interface code for the
- * Book class.
- */
-export const EXAMPLE_BOOK_INTERFACE_CODE = `interface Book { author: Person; }`;
