@@ -51,7 +51,7 @@ export function introspectClassFromTree(
   );
 
   // TODO: Introspect extends.
-  return { extends: [], properties };
+  return { extends: [], name: identifier, properties };
 }
 
 /**

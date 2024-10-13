@@ -12,6 +12,7 @@ export interface Introspector {
  * Introspection is a TypeScript class introspection.
  */
 export interface Introspection {
+  name: string;
   extends: string[];
   properties: IntrospectedProperty[];
 }

@@ -1,4 +1,6 @@
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
+import type { Introspection } from "#/lib/introspector/introspector.ts";
+
 import { makeTreeSitterTypeScriptClassPattern } from "#/lib/introspector/tree-sitter-introspector.ts";
 import {
   EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
@@ -26,28 +28,32 @@ export const EXAMPLE_PERSON = new Person("Ethan", 23);
 /**
  * EXAMPLE_PERSON_INTROSPECTION is the introspection of the Person class.
  */
-export const EXAMPLE_PERSON_INTROSPECTION = [
-  {
-    name: "homePlanet",
-    optional: true,
-    type: "string",
-  },
-  {
-    name: "occupation",
-    optional: true,
-    type: "string",
-  },
-  {
-    name: "name",
-    optional: false,
-    type: "string",
-  },
-  {
-    name: "age",
-    optional: false,
-    type: "number",
-  },
-];
+export const EXAMPLE_PERSON_INTROSPECTION = {
+  extends: [],
+  name: "Person",
+  properties: [
+    {
+      name: "homePlanet",
+      optional: true,
+      type: "string",
+    },
+    {
+      name: "occupation",
+      optional: true,
+      type: "string",
+    },
+    {
+      name: "name",
+      optional: false,
+      type: "string",
+    },
+    {
+      name: "age",
+      optional: false,
+      type: "number",
+    },
+  ],
+} as const satisfies Introspection;
 
 /**
  * EXAMPLE_PERSON_SOURCE_CODE is the source code of the Person class.

@@ -15,6 +15,5 @@ Deno.test("TreeSitterIntrospector introspects TypeScript class", () => {
     EXAMPLE_PERSON_SOURCE_CODE,
     Person.name,
   );
-  assertEquals(introspection.extends, []);
-  assertEquals(introspection.properties, EXAMPLE_PERSON_INTROSPECTION);
+  assertEquals(introspection, EXAMPLE_PERSON_INTROSPECTION);
 });
