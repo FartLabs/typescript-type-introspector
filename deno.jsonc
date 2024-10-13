@@ -1,4 +1,6 @@
 {
+  "name": "@fartlabs/typescript-type-introspector",
+  "version": "0.0.1",
   "lock": false,
   "tasks": {
     "dev": "deno test --watch -A"
