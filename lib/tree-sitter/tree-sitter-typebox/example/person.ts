@@ -1,14 +1,14 @@
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
-import { makeTreeSitterTypeScriptClassPattern } from "./from-typescript-class.ts";
+import { makeTreeSitterTypeScriptClassPattern } from "#/lib/tree-sitter/tree-sitter-typebox/from-typescript-class.ts";
 import {
   EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER,
-} from "./example-tree-sitter-parser.ts";
+} from "./tree-sitter-parser.ts";
 
 /**
- * ExamplePerson is an example class that represents a person.
+ * Person is an example class that represents a person.
  */
-export class ExamplePerson {
+export class Person {
   public homePlanet?: string = "Earth";
   public occupation?: string = "Software Engineer";
 
@@ -19,19 +19,19 @@ export class ExamplePerson {
 }
 
 /**
- * EXAMPLE_PERSON is an example instance of the ExamplePerson class.
+ * EXAMPLE_PERSON is an example instance of the Person class.
  */
-export const EXAMPLE_PERSON = new ExamplePerson("Ethan", 23);
+export const EXAMPLE_PERSON = new Person("Ethan", 23);
 
 /**
- * EXAMPLE_PERSON_SOURCE_CODE is the source code of the ExamplePerson class.
+ * EXAMPLE_PERSON_SOURCE_CODE is the source code of the Person class.
  */
 export const EXAMPLE_PERSON_SOURCE_CODE = await Deno.readTextFile(
   new URL(import.meta.url),
 );
 
 /**
- * EXAMPLE_PERSON_TREE is a tree-sitter tree for the ExamplePerson class's
+ * EXAMPLE_PERSON_TREE is a tree-sitter tree for the Person class's
  * source code.
  */
 export const EXAMPLE_PERSON_TREE = EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER.parse(
@@ -39,20 +39,20 @@ export const EXAMPLE_PERSON_TREE = EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER.parse(
 );
 
 /**
- * EXAMPLE_PERSON_CAPTURES is a list of captures for the ExamplePerson class's
+ * EXAMPLE_PERSON_CAPTURES is a list of captures for the Person class's
  * source code.
  */
 export const EXAMPLE_PERSON_CAPTURES = queryRootNode(
   EXAMPLE_PERSON_TREE,
   makeTreeSitterTypeScriptClassPattern(
-    ExamplePerson.name,
+    Person.name,
     EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   ),
 );
 
 /**
  * EXAMPLE_PERSON_INTERFACE_CODE is the TypeScript interface code for the
- * ExamplePerson class.
+ * Person class.
  */
 export const EXAMPLE_PERSON_INTERFACE_CODE =
-  `interface ExamplePerson { homePlanet?: string; occupation?: string; name: string; age: number; }`;
+  `interface Person { homePlanet?: string; occupation?: string; name: string; age: number; }`;
