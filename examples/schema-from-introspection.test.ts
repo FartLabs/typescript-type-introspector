@@ -3,8 +3,8 @@ import { TypeCompiler } from "@sinclair/typebox/compiler";
 import {
   EXAMPLE_PERSON,
   EXAMPLE_PERSON_INTROSPECTION,
-} from "#/lib/introspector/example/person.ts";
-import { schemaFromIntrospection } from "./schema-from-introspection.ts";
+} from "#/lib/example/person.ts";
+import { schemaFromIntrospection } from "#/lib/typebox/schema-from-introspection.ts";
 
 Deno.test("schemaFromIntrospection introspects TypeScript class", () => {
   const schema = schemaFromIntrospection(EXAMPLE_PERSON_INTROSPECTION);

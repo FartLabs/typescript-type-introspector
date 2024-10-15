@@ -1,6 +1,5 @@
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
 import type { Introspection } from "#/lib/introspector/introspector.ts";
-
 import { makeTreeSitterTypeScriptClassPattern } from "#/lib/introspector/tree-sitter-introspector.ts";
 import {
   EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,

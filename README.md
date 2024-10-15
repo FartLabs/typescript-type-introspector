@@ -3,8 +3,12 @@
 Reason with TypeScript code via
 [type introspection](https://en.wikipedia.org/wiki/Type_introspection).
 
-TODO: Figure out what else to do next with this such as merging the PR that is
-currently open, at least.
+## Introspection
+
+Introspection helps avoid the problem of slow types introduced by libraries like
+Zod and TypeBox. It allows you to determine the type of a value at runtime,
+rather than inferring it at compile time. This can lead to more efficient and
+dynamic type handling in your TypeScript projects.
 
 ## Installation
 
@@ -22,9 +26,17 @@ currently open, at least.
 > it has an extremely fast built-in type checker, it can create example values
 > based on schemas, and a lot more.
 >
-> - <https://blog.val.town/blog/typebox/>
+> \- <https://blog.val.town/blog/typebox/>
+
+Introspection helps avoid the problem of slow types introduced by libraries like
+Zod and TypeBox. It allows you to determine the type of a value at runtime,
+rather than inferring it at compile time. This can lead to more efficient and
+dynamic type handling in your TypeScript projects.
 
 ### TypeBox example
+
+Instantiate a TypeBox schema at runtime using introspection via
+`@sinclair/typebox/compiler`.
 
 ```ts
 // TODO: Add TypeBox example.
