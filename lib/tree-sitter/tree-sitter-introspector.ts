@@ -1,21 +1,14 @@
 import type {
-  NamedCapture,
-  Parser,
-  Tree,
-} from "#/lib/tree-sitter/tree-sitter.ts";
-import {
-  findCaptureString,
-  queryRootNode,
-} from "#/lib/tree-sitter/tree-sitter.ts";
-import type {
   IntrospectedProperty,
   Introspection,
   Introspector,
-} from "./introspector.ts";
+} from "#/lib/introspector/introspector.ts";
+import type { NamedCapture, Parser, Tree } from "./tree-sitter.ts";
+import { findCaptureString, queryRootNode } from "./tree-sitter.ts";
 
 /**
- * TreeSitterTypeScriptTypeIntrospector is a TypeScript type introspector that
- * uses Tree Sitter to introspect TypeScript types.
+ * TreeSitterIntrospector is a TypeScript type introspector that uses Tree
+ * Sitter to introspect TypeScript types.
  */
 export class TreeSitterIntrospector implements Introspector {
   public constructor(
@@ -149,13 +142,14 @@ export const typeScriptTypeAnnotationPrefix = ": ";
 /**
  * defaultClassTreeSitterCaptureNameMap is the default class capture name map.
  */
-export const defaultClassTreeSitterCaptureNameMap = {
-  PROPERTY_IDENTIFIER: "property-identifier",
-  PUBLIC_FIELD_DEFINITION: "public-field-definition",
-  TYPE_ANNOTATION: "type-annotation",
-  TYPE_IDENTIFIER: "type-identifier",
-  VALUE: "value",
-} as const satisfies ClassTreeSitterCaptureNameMap;
+export const defaultClassTreeSitterCaptureNameMap:
+  ClassTreeSitterCaptureNameMap = {
+    PROPERTY_IDENTIFIER: "property-identifier",
+    PUBLIC_FIELD_DEFINITION: "public-field-definition",
+    TYPE_ANNOTATION: "type-annotation",
+    TYPE_IDENTIFIER: "type-identifier",
+    VALUE: "value",
+  } as const;
 
 /**
  * ClassTreeSitterCaptureNameMap is a map of class capture names to their

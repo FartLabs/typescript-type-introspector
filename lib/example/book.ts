@@ -1,10 +1,11 @@
 import { queryRootNode } from "#/lib/tree-sitter/tree-sitter.ts";
-import { makeTreeSitterTypeScriptClassPattern } from "#/lib/introspector/tree-sitter-introspector.ts";
+import { makeTreeSitterTypeScriptClassPattern } from "#/lib/tree-sitter/tree-sitter-introspector.ts";
 import {
   EXAMPLE_TYPESCRIPT_CLASS_TREE_SITTER_CAPTURE_NAME_MAP,
   EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER,
 } from "./tree-sitter-parser.ts";
-import { EXAMPLE_PERSON, Person } from "./person.ts";
+import type { Person } from "./person.ts";
+import { EXAMPLE_PERSON } from "./person.ts";
 
 /**
  * Book is an example class that represents a book.

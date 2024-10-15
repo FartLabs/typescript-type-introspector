@@ -1,7 +1,8 @@
 # typescript-type-introspection
 
 Reason with TypeScript code via
-[type introspection](https://en.wikipedia.org/wiki/Type_introspection).
+[_type introspection_](https://en.wikipedia.org/wiki/Type_introspection),
+powered by [Tree-Sitter](https://tree-sitter.github.io/tree-sitter/).
 
 ## Introspection
 
@@ -13,7 +14,7 @@ dynamic type handling in your TypeScript projects.
 ## Installation
 
 ```sh
-# TODO: Publish on JSR.io
+deno add @fartlabs/typescript-type-introspection
 ```
 
 ## TypeBox
@@ -38,9 +39,7 @@ dynamic type handling in your TypeScript projects.
 Instantiate a TypeBox schema at runtime using introspection via
 `@sinclair/typebox/compiler`.
 
-```ts
-// TODO: Add TypeBox example.
-```
+<https://github.com/FartLabs/typescript-type-introspector/blob/971282f7ff863a84cb43af1e1725961c62cc54b3/examples/schema-from-introspection.test.ts#L1-L13>
 
 ## Development
 

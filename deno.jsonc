@@ -1,6 +1,12 @@
 {
   "name": "@fartlabs/typescript-type-introspector",
   "version": "0.0.1",
+  "exports": {
+    ".": "./lib/introspector/mod.ts",
+    "./typebox": "./lib/typebox/mod.ts",
+    "./tree-sitter/tree-sitter": "./lib/tree-sitter/tree-sitter.ts",
+    "./tree-sitter/tree-sitter-introspector": "./lib/tree-sitter/tree-sitter-introspector.ts"
+  },
   "lock": false,
   "tasks": {
     "dev": "deno test --watch -A"

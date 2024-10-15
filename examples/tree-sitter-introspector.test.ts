@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
-import { TreeSitterIntrospector } from "#/lib/introspector/tree-sitter-introspector.ts";
-import { EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER } from "../lib/example/tree-sitter-parser.ts";
+import { TreeSitterIntrospector } from "#/lib/tree-sitter/tree-sitter-introspector.ts";
+import { EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER } from "#/lib/example/tree-sitter-parser.ts";
 import {
   EXAMPLE_PERSON_INTROSPECTION,
   EXAMPLE_PERSON_SOURCE_CODE,
