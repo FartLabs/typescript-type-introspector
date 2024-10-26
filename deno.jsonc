@@ -9,14 +9,21 @@
   },
   "lock": false,
   "tasks": {
-    "dev": "deno test --watch -A"
+    "dev": "deno test --watch -A",
+    "vendor": "deno run -A vendor.ts"
   },
   "imports": {
     "#/": "./",
     "@sinclair/typebox": "npm:@sinclair/typebox@^0.33.14",
     "@sinclair/typebox-codegen": "npm:@sinclair/typebox-codegen@^0.10.5",
     "@std/assert": "jsr:@std/assert@^1.0.6",
-    "common-tree-sitter-languages/": "https://github.com/jeff-hykin/common_tree_sitter_languages/raw/e0395e3a6e552b0fa73500d5b724735a52936067/main/",
-    "deno-tree-sitter/": "https://deno.land/x/deno_tree_sitter@0.2.5.2/"
+    "deno-tree-sitter/": "./vendor/deno.land/x/deno_tree_sitter@0.2.5.2/",
+    "common-tree-sitter-languages/": "./vendor/raw.githubusercontent.com/jeff-hykin/common_tree_sitter_languages/#e0395e3a6e552b0fa735_8bb8d/main/"
+  },
+  "fmt": {
+    "exclude": ["vendor/", "node_modules/"]
+  },
+  "lint": {
+    "exclude": ["vendor/", "node_modules/"]
   }
 }
