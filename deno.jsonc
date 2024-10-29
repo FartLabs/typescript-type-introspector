@@ -1,29 +1,14 @@
 {
-  "name": "@fartlabs/typescript-type-introspector",
-  "version": "0.0.1",
-  "exports": {
-    ".": "./lib/introspector/mod.ts",
-    "./typebox": "./lib/typebox/mod.ts",
-    "./tree-sitter/tree-sitter": "./lib/tree-sitter/tree-sitter.ts",
-    "./tree-sitter/tree-sitter-introspector": "./lib/tree-sitter/tree-sitter-introspector.ts"
-  },
   "lock": false,
   "tasks": {
-    "dev": "deno test --watch -A",
-    "vendor": "deno run -A vendor.ts"
+    "dev": "deno test --watch -A"
   },
   "imports": {
     "#/": "./",
     "@sinclair/typebox": "npm:@sinclair/typebox@^0.33.14",
     "@sinclair/typebox-codegen": "npm:@sinclair/typebox-codegen@^0.10.5",
     "@std/assert": "jsr:@std/assert@^1.0.6",
-    "deno-tree-sitter/": "./vendor/deno.land/x/deno_tree_sitter@0.2.5.2/",
-    "common-tree-sitter-languages/": "./vendor/raw.githubusercontent.com/jeff-hykin/common_tree_sitter_languages/#e0395e3a6e552b0fa735_8bb8d/main/"
-  },
-  "fmt": {
-    "exclude": ["vendor/", "node_modules/"]
-  },
-  "lint": {
-    "exclude": ["vendor/", "node_modules/"]
+    "deno-tree-sitter/": "https://deno.land/x/deno_tree_sitter@0.2.5.2/",
+    "common-tree-sitter-languages/": "https://github.com/jeff-hykin/common_tree_sitter_languages/raw/e0395e3a6e552b0fa73500d5b724735a52936067/main/"
   }
 }
