@@ -1,4 +1,4 @@
-# typescript-type-introspection
+# typescript-type-introspector
 
 Reason with TypeScript code via
 [_type introspection_](https://en.wikipedia.org/wiki/Type_introspection),
@@ -13,8 +13,12 @@ dynamic type handling in your TypeScript projects.
 
 ## Installation
 
-```sh
-deno add @fartlabs/typescript-type-introspection
+```json
+{
+  "imports": {
+    "typescript-type-introspector": "https://deno.land/x/introspector"
+  }
+}
 ```
 
 ## TypeBox
