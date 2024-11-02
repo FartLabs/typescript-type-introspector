@@ -1,27 +1,14 @@
+import type { ClassDef } from "@deno/doc";
+
 /**
  * Introspector is an interface for TypeScript type introspection.
  */
 export interface Introspector {
   /**
-   * introspectClass introspects a TypeScript class's properties.
+   * introspectClass introspects a TypeScript class definition.
    */
-  introspectClass(sourceCode: string, identifier: string): Introspection;
+  introspectClass(specifier: string, identifier: string): ClassDef;
 }
 
-/**
- * Introspection is a TypeScript class introspection.
- */
-export interface Introspection {
-  name: string;
-  extends: string[];
-  properties: IntrospectedProperty[];
-}
-
-/**
- * IntrospectedProperty is a TypeScript class property introspection.
- */
-export interface IntrospectedProperty {
-  name: string;
-  type: string;
-  optional: boolean;
-}
+// TODO: Figure out how to introspect a TypeScript class definition.
+// Generate TypeBox schema from TypeScript class definition or interface definition.
