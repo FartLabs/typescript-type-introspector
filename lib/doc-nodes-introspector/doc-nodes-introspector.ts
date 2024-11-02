@@ -9,15 +9,9 @@ export class DocNodesIntrospector {
   /**
    * findNode finds the first node that satisfies the given predicate.
    */
-  public findNode(fn: (node: DocNode) => boolean): DocNode | undefined {
-    for (const node of this.nodes) {
-      if (!fn(node)) {
-        continue;
-      }
-
-      return node;
-    }
-
-    return undefined;
+  public findNode(
+    fn: (node: DocNode, index?: number, obj?: DocNode[]) => boolean,
+  ): DocNode | undefined {
+    return this.nodes.find(fn);
   }
 }
