@@ -1,7 +1,8 @@
 {
   "lock": false,
   "tasks": {
-    "dev": "deno test --watch -A"
+    "dev": "deno test --watch -A",
+    "molt": "deno run -A jsr:@molt/cli -w"
   },
   "imports": {
     "#/": "./",
