@@ -8,7 +8,11 @@
     "@sinclair/typebox": "npm:@sinclair/typebox@^0.33.14",
     "@sinclair/typebox-codegen": "npm:@sinclair/typebox-codegen@^0.10.5",
     "@std/assert": "jsr:@std/assert@^1.0.6",
+    "@types/jsonld": "npm:@types/jsonld@^1.5.15",
+    "@types/n3": "npm:@types/n3@^1.21.1",
     "deno-tree-sitter/": "https://deno.land/x/deno_tree_sitter@0.2.5.2/",
-    "common-tree-sitter-languages/": "https://github.com/jeff-hykin/common_tree_sitter_languages/raw/e0395e3a6e552b0fa73500d5b724735a52936067/main/"
+    "common-tree-sitter-languages/": "https://github.com/jeff-hykin/common_tree_sitter_languages/raw/e0395e3a6e552b0fa73500d5b724735a52936067/main/",
+    "jsonld": "npm:jsonld@^8.3.2",
+    "n3": "npm:n3@^1.22.3"
   }
 }
