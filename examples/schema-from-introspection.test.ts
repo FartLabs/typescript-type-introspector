@@ -3,7 +3,7 @@ import { TypeCompiler } from "@sinclair/typebox/compiler";
 import {
   EXAMPLE_PERSON,
   EXAMPLE_PERSON_INTROSPECTION,
-} from "#/lib/example/person.ts";
+} from "#/fixtures/person.ts";
 import { schemaFromIntrospection } from "#/lib/typebox/schema-from-introspection.ts";
 
 Deno.test("schemaFromIntrospection introspects TypeScript class", () => {

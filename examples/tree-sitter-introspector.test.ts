@@ -1,11 +1,11 @@
 import { assertEquals } from "@std/assert";
 import { TreeSitterIntrospector } from "#/lib/tree-sitter/tree-sitter-introspector.ts";
-import { EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER } from "#/lib/example/tree-sitter-parser.ts";
+import { EXAMPLE_TYPESCRIPT_TREE_SITTER_PARSER } from "#/fixtures/tree-sitter-parser.ts";
 import {
   EXAMPLE_PERSON_INTROSPECTION,
   EXAMPLE_PERSON_SOURCE_CODE,
   Person,
-} from "#/lib/example/person.ts";
+} from "#/fixtures/person.ts";
 
 Deno.test("TreeSitterIntrospector introspects TypeScript class", () => {
   const introspector = new TreeSitterIntrospector(

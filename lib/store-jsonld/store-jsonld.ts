@@ -1,7 +1,6 @@
 import { JsonLdParser } from "jsonld-streaming-parser";
 import { promisifyEventEmitter } from "event-emitter-promisify";
 import { n3 } from "#/lib/n3/mod.ts";
-import { jsonld } from "#/lib/jsonld/mod.ts";
 
 /**
  * storeJSONLd stores a JSON-LD document in a N3 store.
@@ -11,7 +10,7 @@ import { jsonld } from "#/lib/jsonld/mod.ts";
  */
 export async function storeJSONLd(
   store: n3.Store,
-  doc: jsonld.JsonLdDocument,
+  doc: unknown,
 ): Promise<void> {
   const parser = new JsonLdParser();
   parser.write(JSON.stringify(doc));
